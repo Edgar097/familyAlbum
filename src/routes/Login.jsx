@@ -3,14 +3,20 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import Axios from "axios";
 import { UserContext } from "../utils/UserContext";
+import red from 'material-ui/colors/red';
+import green from 'material-ui/colors/green';
+
+import ParkIcon from '@mui/icons-material/Park';
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+import RedeemTwoToneIcon from '@mui/icons-material/RedeemTwoTone';
+import StarTwoToneIcon from '@mui/icons-material/StarTwoTone';
+
 
 function Copyright(props) {
   return (
@@ -22,7 +28,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://www.getcrg.com/">
-        CRG
+        Familia Parra Barillas
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -30,7 +36,18 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: red,
+    secondary: green
+  },
+  typography: {
+    fontFamily: [
+      'Mountains of Christmas',
+      'cursive',
+    ].join(','),
+  }
+});
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -89,7 +106,11 @@ const SignIn = () => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h4">FIFCO Dashboard</Typography>
+          <Typography variant="h4">
+            <ParkIcon/>
+            Family Album
+            <RedeemTwoToneIcon/>
+            </Typography>
           <Box noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
