@@ -36,7 +36,7 @@ const css = () => ({
     wrap: "wrap",
   },
   pictureBox: {
-    backgroundImage: `url(${Family})`,
+    backgroundImage: `url(https://user-images.githubusercontent.com/76976401/144694166-55203e91-62f9-4cdf-aad1-2f7e7540b81d.jpg)`,
     backgroundSize: "cover",
     outline: "1px solid black",
     backgroundRepeat: "no-repeat",
@@ -44,7 +44,7 @@ const css = () => ({
     width: "100%",
   },
   topAndBotPicture: {
-    backgroundImage: `url(${TopFrame})`,
+    backgroundImage: `url(https://user-images.githubusercontent.com/76976401/144694133-51c5bc20-f99d-4f85-bb01-fbf9b9264d03.jpg)`,
     backgroundSize: "cover",
     outline: "1px solid black",
     backgroundRepeat: "no-repeat",
@@ -52,7 +52,7 @@ const css = () => ({
     width: "100%",
   },
   sidePicture: {
-    backgroundImage: `url(${SideFrame})`,
+    backgroundImage: `url(https://user-images.githubusercontent.com/76976401/144694112-a3c70e72-d104-4860-bedd-9fbf30dc66b6.jpg)`,
     backgroundSize: "cover",
     outline: "1px solid black",
     backgroundRepeat: "no-repeat",
