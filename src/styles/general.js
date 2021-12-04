@@ -1,23 +1,63 @@
-export default () => ({
-  //FE6B8B
+import TopFrame from "../images/topSide.jpg";
+import SideFrame from "../images/sideFrame.jpg";
+import Family from "../images/family.jpg";
 
-  //#ACFBCF
-  //FF8E53
+const css = () => ({
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 630,
+    width: 500,
+    padding: "60px",
+    overflow: "auto",
+  },
   flexBox: {
-    background: "linear-gradient(45deg, #2B3EFC 30%, #48DB4E 90%)",
     border: 0,
     borderRadius: 3,
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     color: "white",
     height: "100%",
-    padding: "0 30px",
+    width: "100%",
     overflow: "auto",
   },
-  dashBoardBackground: {
-    backgroundColor: "#F4F4FC",
-    flexGrow: 1,
-    height: "100vh",
-    overflow: "auto",
+  topAndBotFrame: {
+    height: "10%",
+    width: "100%",
+  },
+  sidesFrame: {
+    width: "20%",
+  },
+  pictureFrame: {
+    width: "100%",
+    height: "80%",
+    wrap: "wrap",
+  },
+  pictureBox: {
+    backgroundImage: `url(${Family})`,
+    backgroundSize: "cover",
+    outline: "1px solid black",
+    backgroundRepeat: "no-repeat",
+    height: "100%",
+    width: "100%",
+  },
+  topAndBotPicture: {
+    backgroundImage: `url(${TopFrame})`,
+    backgroundSize: "cover",
+    outline: "1px solid black",
+    backgroundRepeat: "no-repeat",
+    height: "100%",
+    width: "100%",
+  },
+  sidePicture: {
+    backgroundImage: `url(${SideFrame})`,
+    backgroundSize: "cover",
+    outline: "1px solid black",
+    backgroundRepeat: "no-repeat",
+    height: "100%",
+    width: "100%",
   },
   dashboard: {
     display: "flex",
@@ -32,16 +72,6 @@ export default () => ({
     width: "100%",
     position: "absolute",
     zIndex: "100",
-  },
-  flexBoxV2: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: 300,
-    overflow: "auto",
   },
   flexBoxV3: {
     background: "#FCFCFC",
@@ -87,48 +117,4 @@ export default () => ({
     borderBottom: "3px solid rgb(212, 212, 212)",
   },
 });
-
-/*
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-            }}
-          >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-
-            { 
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            }
-            </Toolbar>
-
- <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-         </Drawer>
-*/
+export default css;

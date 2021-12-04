@@ -9,14 +9,19 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
-import red from 'material-ui/colors/red';
-import green from 'material-ui/colors/green';
+import Frame from "../components/Frame";
+import red from "material-ui/colors/red";
+import green from "material-ui/colors/green";
 
-import ParkIcon from '@mui/icons-material/Park';
-import AcUnitIcon from '@mui/icons-material/AcUnit';
-import RedeemTwoToneIcon from '@mui/icons-material/RedeemTwoTone';
-import StarTwoToneIcon from '@mui/icons-material/StarTwoTone';
+import ParkIcon from "@mui/icons-material/Park";
+import AcUnitIcon from "@mui/icons-material/AcUnit";
+import RedeemTwoToneIcon from "@mui/icons-material/RedeemTwoTone";
+import StarTwoToneIcon from "@mui/icons-material/StarTwoTone";
 
+import { makeStyles } from "@mui/styles";
+import styles from "../styles/general";
+
+const useStyles = makeStyles(styles);
 
 function Copyright(props) {
   return (
@@ -39,17 +44,15 @@ function Copyright(props) {
 const theme = createTheme({
   palette: {
     primary: red,
-    secondary: green
+    secondary: green,
   },
   typography: {
-    fontFamily: [
-      'Mountains of Christmas',
-      'cursive',
-    ].join(','),
-  }
+    fontFamily: ["Mountains of Christmas", "cursive"].join(","),
+  },
 });
 
 const SignIn = () => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const contextUser = useContext(UserContext);
   const [user, setUser] = useState("");
@@ -106,50 +109,55 @@ const SignIn = () => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h4">
-            <ParkIcon/>
+          <Typography variant="h2">
+            <ParkIcon />
             Family Album
-            <RedeemTwoToneIcon/>
-            </Typography>
-          <Box noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Username"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={handleChange}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={handleChange}
-            />
-            {
-              //<LinkRoute to="/dashboard">
-            }
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={handleSubmit}
-            >
-              Sign In
-            </Button>
-            {
-              // </LinkRoute>
-            }
-          </Box>
+            <RedeemTwoToneIcon />
+          </Typography>
+        </Box>
+      </Container>
+      <Container className={classes.container} maxWidth="xs">
+        <Frame />
+      </Container>
+      <Container maxWidth="xs">
+        <Box noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Name"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onChange={handleChange}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Family Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={handleChange}
+          />
+          {
+            //<LinkRoute to="/dashboard">
+          }
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleSubmit}
+          >
+            Welcome Back
+          </Button>
+          {
+            // </LinkRoute>
+          }
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
