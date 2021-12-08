@@ -1,47 +1,81 @@
-import TopFrame from "../images/topSide.jpg";
-import SideFrame from "../images/sideFrame.jpg";
-import Family from "../images/family.jpg";
+import red from "material-ui/colors/red";
+import green from "material-ui/colors/green";
+import { createTheme } from "@mui/material/styles";
 
-const css = () => ({
+export const theme = createTheme({
+  palette: {
+    primary: red,
+    secondary: green,
+  },
+  typography: {
+    fontFamily: ["Mountains of Christmas", "cursive"].join(","),
+  },
+});
+
+const style = () => ({
   container: {
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    height: 630,
-    width: 500,
     padding: "60px",
     overflow: "auto",
   },
   flexBox: {
     border: 0,
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 3,
-    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    boxShadow: "0 5px 7px 4px rgba(255, 105, 135, .3)",
     color: "white",
-    height: "100%",
+    height: 500,
     width: "100%",
     overflow: "auto",
+    outline: "1px solid black",
   },
-  topAndBotFrame: {
-    height: "10%",
-    width: "100%",
+  box: {
+    marginTop: 8,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    paddingTop: "60px",
+    paddingBottom: "60px",
+  },
+  familyTitle: {
+    fontSize: "50px !important",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "30px !important",
+    },
   },
   sidesFrame: {
+    display: "flex",
     width: "20%",
   },
   pictureFrame: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
     width: "100%",
     height: "80%",
-    wrap: "wrap",
   },
   pictureBox: {
-    backgroundImage: `url(https://user-images.githubusercontent.com/76976401/144694166-55203e91-62f9-4cdf-aad1-2f7e7540b81d.jpg)`,
-    backgroundSize: "cover",
-    outline: "1px solid black",
-    backgroundRepeat: "no-repeat",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 3,
+    boxShadow: "0 5px 7px 4px rgba(255, 105, 135, .3)",
+    color: "white",
     height: "100%",
     width: "100%",
+    overflow: "hidden",
+    outline: "1px solid black",
+    borderImage: `url(https://user-images.githubusercontent.com/76976401/145110512-1483dd79-a43f-42cd-96c6-b918832f34cd.jpg) 30 stretch`,
+    border: "20px solid transparent",
   },
   topAndBotPicture: {
     backgroundImage: `url(https://user-images.githubusercontent.com/76976401/144694133-51c5bc20-f99d-4f85-bb01-fbf9b9264d03.jpg)`,
@@ -50,6 +84,7 @@ const css = () => ({
     backgroundRepeat: "no-repeat",
     height: "100%",
     width: "100%",
+    display: "flex",
   },
   sidePicture: {
     backgroundImage: `url(https://user-images.githubusercontent.com/76976401/144694112-a3c70e72-d104-4860-bedd-9fbf30dc66b6.jpg)`,
@@ -58,6 +93,7 @@ const css = () => ({
     backgroundRepeat: "no-repeat",
     height: "100%",
     width: "100%",
+    display: "flex",
   },
   dashboard: {
     display: "flex",
@@ -117,4 +153,4 @@ const css = () => ({
     borderBottom: "3px solid rgb(212, 212, 212)",
   },
 });
-export default css;
+export default style;

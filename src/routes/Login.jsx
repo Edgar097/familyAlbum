@@ -6,12 +6,10 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
 import Frame from "../components/Frame";
-import red from "material-ui/colors/red";
-import green from "material-ui/colors/green";
 
 import ParkIcon from "@mui/icons-material/Park";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
@@ -19,7 +17,7 @@ import RedeemTwoToneIcon from "@mui/icons-material/RedeemTwoTone";
 import StarTwoToneIcon from "@mui/icons-material/StarTwoTone";
 
 import { makeStyles } from "@mui/styles";
-import styles from "../styles/general";
+import styles, { theme } from "../styles/general";
 
 const useStyles = makeStyles(styles);
 
@@ -40,16 +38,6 @@ function Copyright(props) {
     </Typography>
   );
 }
-
-const theme = createTheme({
-  palette: {
-    primary: red,
-    secondary: green,
-  },
-  typography: {
-    fontFamily: ["Mountains of Christmas", "cursive"].join(","),
-  },
-});
 
 const SignIn = () => {
   const classes = useStyles();
@@ -99,25 +87,24 @@ const SignIn = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h2">
+        <Box className={classes.box}>
+          <Typography className={classes.familyTitle}>
             <ParkIcon />
             Family Album
             <RedeemTwoToneIcon />
           </Typography>
         </Box>
       </Container>
-      <Container className={classes.container} maxWidth="xs">
-        <Frame />
+      <Container maxWidth="xs">
+        <Frame
+          image={
+            "https://user-images.githubusercontent.com/76976401/144694166-55203e91-62f9-4cdf-aad1-2f7e7540b81d.jpg"
+          }
+          height="400px"
+          width="100%"
+        />
       </Container>
       <Container maxWidth="xs">
         <Box noValidate sx={{ mt: 1 }}>
