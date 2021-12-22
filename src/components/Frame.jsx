@@ -7,11 +7,17 @@ import styles from "../styles/general";
 
 const useStyles = makeStyles(styles);
 
-const Frame = ({ image, ...rest }) => {
+const Frame = ({ image, border, ...rest }) => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.pictureBox} {...rest}>
+    <Box
+      className={classes.pictureBox}
+      style={{
+        borderImage: `url(${border}) 30 stretch`,
+      }}
+      {...rest}
+    >
       <img src={image} {...rest} alt="" />
     </Box>
   );
@@ -19,6 +25,7 @@ const Frame = ({ image, ...rest }) => {
 
 Frame.propTypes = {
   image: PropTypes.string,
+  border: PropTypes.string,
   height: PropTypes.any,
   width: PropTypes.any,
 };

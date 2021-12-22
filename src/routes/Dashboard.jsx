@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from "react";
-import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import React, { useContext, useEffect, useState } from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
+import ArtTrackIcon from "@mui/icons-material/ArtTrack";
+import axios from "axios";
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -13,6 +13,7 @@ import { useQuery } from "react-query";
 import { fetchData } from "../queries/selects";
 import { makeStyles } from "@mui/styles";
 import styles from "../styles/general";
+import ImageForm from "../components/ImageForm";
 import {
   Chart,
   PieSeries,
@@ -24,6 +25,9 @@ import MasterTable from "../components/MasterTable";
 import { UserContext } from "../utils/UserContext";
 import { useNavigate } from "react-router-dom";
 import TopBar from "../components/TopBar";
+import { Grid } from "@mui/material";
+import { typography } from "@mui/system";
+import AlbumPage from "../components/AlbumPage";
 
 function Copyright(props) {
   return (
@@ -49,9 +53,21 @@ const useStyles = makeStyles(styles);
 function DashboardContent() {
   const user = useContext(UserContext).user;
   const navigate = useNavigate();
-  const { data: ticketData, status: ticketsLoading } = useQuery("tickets", () =>
-    fetchData("/api/tickets")
+  const [albumId, setAlbumId] = useState();
+
+  const getAlbums = async () => {
+    const data = await axios.get(`http://localhost:8080/api/listAlbum`, {
+      params: {
+        accessToken: user.accessToken,
+      },
+    });
+    return data;
+  };
+
+  const { data: albumData, status: albumLoading } = useQuery("albums", () =>
+    getAlbums()
   );
+  console.log(albumData);
   const { data: queuesData, status: queuesLoading } = useQuery("queues", () =>
     fetchData("/api/queues")
   );
@@ -64,98 +80,67 @@ function DashboardContent() {
     () => fetchData("/api/queues/services/totals")
   );
   const classes = useStyles();
+  const handleClickAlbum = (albumId) => {
+    console.log(albumId);
+    setAlbumId(albumId);
+  };
+  const handleClickMain = () => {
+    setAlbumId();
+    console.log("Click");
+  };
 
   useEffect(() => {
-    if (user !== "LogIn") navigate("/", { replace: true });
-  }, [user]);
+    if (!user) navigate("/", { replace: true });
+    console.log("Dash:", user);
+  });
 
   return (
-    <ThemeProvider theme={mdTheme}>
-      <Box className={classes.dashboard}>
+    <>
+      <Box className={classes.fullscreen}>
         <CssBaseline />
-        <TopBar />
+        <TopBar
+          title={user.profileObj ? user.profileObj.name : "No Title"}
+          handleClickMain={handleClickMain}
+        />
         <Box className={classes.dashBoardBackground} component="main">
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 400,
-                    width: "100%",
-                  }}
-                >
-                  {totalsLoading === "loading" && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        height: "100%",
-                        width: "100%",
-                        justifyContent: "center",
-                        alignItems: "center",
+          {!albumId && (
+            <Grid container spacing={2} className={classes.albumGrid}>
+              {albumData &&
+                albumData.data &&
+                albumData.data.albums.map((album, key) => (
+                  <Grid key={key} item xs={12} md={6} lg={4}>
+                    <Box className={classes.albumTag}>
+                      <Typography variant="h4">{album.title}</Typography>
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={album.productUrl}
+                      >
+                        <ArtTrackIcon />
+                      </a>
+                    </Box>
+                    <Paper
+                      className={classes.albumPaper}
+                      onClick={() => {
+                        handleClickAlbum(album.id);
                       }}
                     >
-                      <CircularProgress />
-                    </Box>
-                  )}
-                  {totalsLoading === "success" && (
-                    <Chart data={queuesTotal || []}>
-                      <PieSeries
-                        valueField="Total"
-                        argumentField="Queue"
-                        innerRadius={0.6}
+                      <img
+                        width="100%"
+                        height="100%"
+                        src={album.coverPhotoBaseUrl}
+                        alt={album.title}
                       />
-                      <Title text="Queues" />
-                      <Legend />
-                      <Animation />
-                    </Chart>
-                  )}
-                </Paper>
-              </Grid>
-              {/* Ticket Table */}
-              <Grid item xs={12}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  {ticketsLoading === "loading" && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        height: "100%",
-                        width: "100%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <CircularProgress />
-                    </Box>
-                  )}
-
-                  {ticketsLoading === "success" && (
-                    <React.Fragment>
-                      <MasterTable
-                        queues={queuesData || []}
-                        tickets={ticketData}
-                        services={queuesServiceTotal}
-                      />
-                    </React.Fragment>
-                  )}
-                </Paper>
-              </Grid>
+                    </Paper>
+                  </Grid>
+                ))}
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
+          )}
+          {albumId && <AlbumPage></AlbumPage>}
         </Box>
       </Box>
-    </ThemeProvider>
+    </>
   );
 }
 

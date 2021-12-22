@@ -1,15 +1,16 @@
 import { React, useState, useEffect, useContext } from "react";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { ThemeProvider } from "@mui/material/styles";
+import GoogleLogin from "react-google-login";
+
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
 import Frame from "../components/Frame";
+import Cookies from "js-cookie";
 
 import ParkIcon from "@mui/icons-material/Park";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
@@ -47,13 +48,6 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [authorization, setAuthorization] = useState(false);
 
-  useEffect(() => {
-    if (authorization) {
-      navigate("/dashboard", { replace: true });
-      contextUser.setUser("LogIn");
-    }
-  }, [authorization]);
-
   const ajax = ({ url, method = "GET" }) => {
     const request = new XMLHttpRequest();
     request.open(method, url, true);
@@ -62,14 +56,18 @@ const SignIn = () => {
     console.log(request.responseURL, "Request", typeof request);
     return request.responseText;
   };
+  const responseGoogle = (response) => {
+    contextUser.setUser(response);
+    navigate("/dashboard", { replace: true });
+  };
   const handleSubmit = async () => {
     const port = process.env.PORT || 8080;
     let xhr;
     if (window.XMLHttpRequest) xhr = new XMLHttpRequest();
-    xhr.open("GET", `http://20.118.65.75:${port}/auth/${user}/${password}`);
+    xhr.open("GET", `http://localhost:${port}/auth/google`);
 
     xhr.addEventListener("load", (response) => {
-      if (response.target.responseText === "true") setAuthorization(response);
+      //if (response.target.responseText === "true") setAuthorization(response);
       console.log(response.target.responseText); //Hace falta un IF
     });
 
@@ -86,9 +84,8 @@ const SignIn = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Container component="main" maxWidth="xs">
+    <>
+      <Container maxWidth="xs">
         <Box className={classes.box}>
           <Typography className={classes.familyTitle}>
             <ParkIcon />
@@ -102,53 +99,26 @@ const SignIn = () => {
           image={
             "https://user-images.githubusercontent.com/76976401/144694166-55203e91-62f9-4cdf-aad1-2f7e7540b81d.jpg"
           }
+          border={
+            "https://user-images.githubusercontent.com/76976401/145110512-1483dd79-a43f-42cd-96c6-b918832f34cd.jpg"
+          }
           height="400px"
           width="100%"
         />
       </Container>
       <Container maxWidth="xs">
         <Box noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Name"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={handleChange}
+          <GoogleLogin
+            clientId="785578439110-ife7i20s9dqj3n6hnnochdb4pme5quc7.apps.googleusercontent.com"
+            buttonText="Welcome Back"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={"single_host_origin"}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Family Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={handleChange}
-          />
-          {
-            //<LinkRoute to="/dashboard">
-          }
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={handleSubmit}
-          >
-            Welcome Back
-          </Button>
-          {
-            // </LinkRoute>
-          }
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-    </ThemeProvider>
+    </>
   );
 };
 

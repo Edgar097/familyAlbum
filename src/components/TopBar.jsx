@@ -11,13 +11,13 @@ import styles from "../styles/general";
 import { IconButton } from "@mui/material";
 const useStyles = makeStyles(styles);
 
-const TopBar = (props) => {
+const TopBar = ({ title, handleClickMain }) => {
   const classes = useStyles();
   const user = useContext(UserContext);
   const handleClick = () => {
-    user.setUser("LogOut");
-    console.log(user);
+    user.setUser(false);
   };
+
   return (
     <Box className={classes.appBar}>
       <div className={classes.borders}>
@@ -27,8 +27,9 @@ const TopBar = (props) => {
             variant="h6"
             noWrap
             className={classes.marginTitle}
+            onClick={handleClickMain}
           >
-            Dashboard
+            {"Welcome Back, " + title + "!"}
           </Typography>
           <IconButton className={classes.iconButton} onClick={handleClick}>
             <LogoutIcon />
@@ -39,6 +40,9 @@ const TopBar = (props) => {
   );
 };
 
-TopBar.propTypes = {};
+TopBar.propTypes = {
+  title: PropTypes.string,
+  handleClickMain: PropTypes.func,
+};
 
 export default TopBar;

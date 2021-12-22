@@ -42,7 +42,6 @@ const style = () => ({
     flexDirection: "column",
     alignItems: "center",
     paddingTop: "60px",
-    paddingBottom: "60px",
   },
   familyTitle: {
     fontSize: "50px !important",
@@ -74,8 +73,9 @@ const style = () => ({
     width: "100%",
     overflow: "hidden",
     outline: "1px solid black",
-    borderImage: `url(https://user-images.githubusercontent.com/76976401/145110512-1483dd79-a43f-42cd-96c6-b918832f34cd.jpg) 30 stretch`,
     border: "20px solid transparent",
+    marginTop: "60px",
+    marginBottom: "60px",
   },
   topAndBotPicture: {
     backgroundImage: `url(https://user-images.githubusercontent.com/76976401/144694133-51c5bc20-f99d-4f85-bb01-fbf9b9264d03.jpg)`,
@@ -95,8 +95,15 @@ const style = () => ({
     width: "100%",
     display: "flex",
   },
-  dashboard: {
-    display: "flex",
+  fullscreen: {
+    position: "fixed",
+    overflow: "auto",
+    top: "0",
+    left: "0",
+    bottom: "0",
+    right: "0",
+    background:
+      "linear-gradient(0deg, rgba(34,193,195,0.24740318490677526) 0%, rgba(253,187,45,0.12975612608324583) 100%)",
   },
   marginTitle: {
     flexGrow: 1,
@@ -104,7 +111,8 @@ const style = () => ({
     color: "#FFFFFF",
   },
   appBar: {
-    background: "#2B3EFC",
+    background:
+      "linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 39%, rgba(252,176,69,1) 100%)",
     width: "100%",
     position: "absolute",
     zIndex: "100",
@@ -151,6 +159,27 @@ const style = () => ({
   },
   borders: {
     borderBottom: "3px solid rgb(212, 212, 212)",
+  },
+  albumGrid: { padding: "1em", maxWidth: "auto", height: "500" },
+  albumPaper: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "white",
+    width: "100%",
+    overflow: "hidden",
+    outline: "1px solid black",
+    height: "calc(100vh - 100px)",
+    maxHeight: "400px",
+  },
+  albumTag: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    alignItems: "center",
+    width: "100%",
+    height: "10%",
   },
 });
 export default style;
