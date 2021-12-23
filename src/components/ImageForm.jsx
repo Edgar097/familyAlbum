@@ -1,25 +1,34 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const ImageForm = () => {
+const ImageForm = ({ accessToken, albumId }) => {
   const [file, setFile] = useState(null);
   const [imgFile, setImgFile] = useState("");
-
   const handleFileChange = (event) => {
     setFile(event.target.files);
     console.log(file);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    const url = "https://family-album-pr.herokuapp.com";
     const data = new FormData();
     for (var x = 0; x < file.length; x++) {
       data.append("file", file[x]);
     }
-    axios.post("http://localhost:8080/api/upload", data).then((res) => {
-      console.log(res.data);
-      setImgFile("http://localhost:8080/public/images/" + res.data[0].filename);
+    await axios.post(`${url}/api/upload`, data).then((res) => {
+      console.log("Respond", res);
     });
+    await axios
+      .post(`${url}/api/uploadToGoogle`, null, {
+        params: {
+          accessToken: accessToken,
+          albumId: albumId,
+        },
+      })
+      .then((res) => {
+        console.log("Respond", res);
+      });
   };
 
   return (
@@ -40,7 +49,6 @@ const ImageForm = () => {
           </button>
         </div>
       </form>
-      <img src={imgFile} alt="img" />
       {/* Display Image Here */}
     </div>
   );

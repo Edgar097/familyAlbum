@@ -1,12 +1,43 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ImageForm from "../components/ImageForm";
+import ImageForm from "./ImageForm";
+import axios from "axios";
+import { useQuery } from "react-query";
 
-const AlbumPage = ({ id }) => {
+const AlbumPage = ({ id, accessToken }) => {
+  const url = "https://family-album-pr.herokuapp.com";
+  const getAlbumsPhotos = async () => {
+    const data = await axios.get(`${url}/api/getAlbum`, {
+      params: {
+        accessToken: accessToken,
+        albumId: id,
+      },
+    });
+    return data;
+  };
+  const { data: albumPhotos, status: albumPhotosLoading } = useQuery(
+    "albumsPhoto",
+    () => getAlbumsPhotos()
+  );
+  console.log("Photos", albumPhotos ? albumPhotos.data.mediaItems : "");
   return (
     <div>
-      <ImageForm />
-      {id}
+      <ImageForm albumId={id} accessToken={accessToken} />
+      {!(typeof albumPhotos === "undefined") &&
+        albumPhotos.data &&
+        albumPhotos.data.mediaItems &&
+        albumPhotos.data.mediaItems.map((media, key) => {
+          console.log(media.baseUrl);
+          return (
+            <img
+              key={key}
+              src={media.baseUrl}
+              alt={media.filename}
+              width="100px"
+              height="100px"
+            />
+          );
+        })}
     </div>
   );
 };

@@ -181,5 +181,10 @@ const style = () => ({
     width: "100%",
     height: "10%",
   },
+  loginBox: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 export default style;

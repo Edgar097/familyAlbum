@@ -52,13 +52,24 @@ const useStyles = makeStyles(styles);
 
 function DashboardContent() {
   const user = useContext(UserContext).user;
+  const url = "https://family-album-pr.herokuapp.com";
   const navigate = useNavigate();
   const [albumId, setAlbumId] = useState();
 
   const getAlbums = async () => {
-    const data = await axios.get(`http://localhost:8080/api/listAlbum`, {
+    const data = await axios.get(`${url}/api/listAlbum`, {
       params: {
         accessToken: user.accessToken,
+      },
+    });
+    return data;
+  };
+
+  const setAlbums = async () => {
+    const data = await axios.post(`${url}/api/createAlbum`, null, {
+      params: {
+        accessToken: user.accessToken,
+        name: "Prueba new album",
       },
     });
     return data;
@@ -67,10 +78,7 @@ function DashboardContent() {
   const { data: albumData, status: albumLoading } = useQuery("albums", () =>
     getAlbums()
   );
-  console.log(albumData);
-  const { data: queuesData, status: queuesLoading } = useQuery("queues", () =>
-    fetchData("/api/queues")
-  );
+  console.log("ALBUM DATA", albumData);
   const { data: queuesTotal, status: totalsLoading } = useQuery(
     "queuesTotals",
     () => fetchData("/api/queues/totals")
@@ -79,14 +87,20 @@ function DashboardContent() {
     "queuesServiceTotals",
     () => fetchData("/api/queues/services/totals")
   );
+
   const classes = useStyles();
+
   const handleClickAlbum = (albumId) => {
     console.log(albumId);
     setAlbumId(albumId);
   };
+
   const handleClickMain = () => {
     setAlbumId();
-    console.log("Click");
+  };
+
+  const handleClickAddAlbum = () => {
+    setAlbums();
   };
 
   useEffect(() => {
@@ -101,6 +115,7 @@ function DashboardContent() {
         <TopBar
           title={user.profileObj ? user.profileObj.name : "No Title"}
           handleClickMain={handleClickMain}
+          handleClickAddAlbum={handleClickAddAlbum}
         />
         <Box className={classes.dashBoardBackground} component="main">
           <Toolbar />
@@ -137,7 +152,9 @@ function DashboardContent() {
                 ))}
             </Grid>
           )}
-          {albumId && <AlbumPage></AlbumPage>}
+          {albumId && (
+            <AlbumPage id={albumId} accessToken={user.accessToken}></AlbumPage>
+          )}
         </Box>
       </Box>
     </>

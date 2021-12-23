@@ -60,19 +60,6 @@ const SignIn = () => {
     contextUser.setUser(response);
     navigate("/dashboard", { replace: true });
   };
-  const handleSubmit = async () => {
-    const port = process.env.PORT || 8080;
-    let xhr;
-    if (window.XMLHttpRequest) xhr = new XMLHttpRequest();
-    xhr.open("GET", `http://localhost:${port}/auth/google`);
-
-    xhr.addEventListener("load", (response) => {
-      //if (response.target.responseText === "true") setAuthorization(response);
-      console.log(response.target.responseText); //Hace falta un IF
-    });
-
-    xhr.send();
-  };
 
   const handleChange = (event) => {
     if (event.currentTarget.name === "email") {
@@ -107,7 +94,7 @@ const SignIn = () => {
         />
       </Container>
       <Container maxWidth="xs">
-        <Box noValidate sx={{ mt: 1 }}>
+        <Box className={classes.loginBox}>
           <GoogleLogin
             clientId="785578439110-ife7i20s9dqj3n6hnnochdb4pme5quc7.apps.googleusercontent.com"
             buttonText="Welcome Back"
