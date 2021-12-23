@@ -1,6 +1,6 @@
 {
-  "homepage": "https://getcrg.github.io/webapp/",
-  "name": "dashboard",
+  "homepage": "https://getcrg.github.io/",
+  "name": "family-album",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
