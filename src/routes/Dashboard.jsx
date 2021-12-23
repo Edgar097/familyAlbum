@@ -14,20 +14,13 @@ import { fetchData } from "../queries/selects";
 import { makeStyles } from "@mui/styles";
 import styles from "../styles/general";
 import ImageForm from "../components/ImageForm";
-import {
-  Chart,
-  PieSeries,
-  Title,
-  Legend,
-} from "@devexpress/dx-react-chart-material-ui";
-import { Animation } from "@devexpress/dx-react-chart";
-import MasterTable from "../components/MasterTable";
 import { UserContext } from "../utils/UserContext";
 import { useNavigate } from "react-router-dom";
 import TopBar from "../components/TopBar";
 import { Grid } from "@mui/material";
 import { typography } from "@mui/system";
 import AlbumPage from "../components/AlbumPage";
+import FModal from "../components/FModal";
 
 function Copyright(props) {
   return (
@@ -47,14 +40,21 @@ function Copyright(props) {
   );
 }
 
-const mdTheme = createTheme();
 const useStyles = makeStyles(styles);
 
 function DashboardContent() {
   const user = useContext(UserContext).user;
   const url = "https://family-album-pr.herokuapp.com";
+  const classes = useStyles();
   const navigate = useNavigate();
   const [albumId, setAlbumId] = useState();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const getAlbums = async () => {
     const data = await axios.get(`${url}/api/listAlbum`, {
@@ -88,8 +88,6 @@ function DashboardContent() {
     () => fetchData("/api/queues/services/totals")
   );
 
-  const classes = useStyles();
-
   const handleClickAlbum = (albumId) => {
     console.log(albumId);
     setAlbumId(albumId);
@@ -100,7 +98,8 @@ function DashboardContent() {
   };
 
   const handleClickAddAlbum = () => {
-    setAlbums();
+    handleOpen();
+    // setAlbums();
   };
 
   useEffect(() => {
@@ -155,6 +154,12 @@ function DashboardContent() {
           {albumId && (
             <AlbumPage id={albumId} accessToken={user.accessToken}></AlbumPage>
           )}
+          <FModal
+            open={open}
+            handleClose={handleClose}
+            id={albumId}
+            accessToken={user.accessToken}
+          ></FModal>
         </Box>
       </Box>
     </>

@@ -21,7 +21,6 @@ const AlbumPage = ({ id, accessToken }) => {
   );
   return (
     <div>
-      <ImageForm albumId={id} accessToken={accessToken} />
       {!(typeof albumPhotos === "undefined") &&
         albumPhotos.data &&
         albumPhotos.data.mediaItems &&
