@@ -19,7 +19,6 @@ const AlbumPage = ({ id, accessToken }) => {
     "albumsPhoto",
     () => getAlbumsPhotos()
   );
-  console.log("Photos", albumPhotos ? albumPhotos.data.mediaItems : "");
   return (
     <div>
       <ImageForm albumId={id} accessToken={accessToken} />
